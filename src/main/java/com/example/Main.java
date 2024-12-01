@@ -3,11 +3,9 @@ package com.example;
 import com.example.model.ImagePanel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.Random;
 
 
 public class Main {
@@ -19,6 +17,7 @@ public class Main {
         JFrame frame = new JFrame();
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setResizable(false);
+        frame.setTitle("Gestures in IDE");
         frame.setVisible(true);
 
         ImagePanel ip = new ImagePanel();
@@ -30,7 +29,6 @@ public class Main {
             public void mouseMoved(MouseEvent e) {
                 int mouseX = e.getX();
                 int mouseY = e.getY();
-
 
                 switch (direction) {
                     case 1:
@@ -60,6 +58,21 @@ public class Main {
             @Override
             public void mouseEntered(MouseEvent e) {
                 ip.setVisible(true);
+                int x = e.getX();
+                int y = e.getY();
+
+                int width = frame.getWidth();
+                int height = frame.getHeight();
+
+                if (x <= 1) {
+                    direction = 2;
+                } else if (x >= width - 1) {
+                    direction = 1;
+                } else if (y <= 40) {
+                    direction = 3;
+                } else if (y >= height - 10) {
+                    direction = 4;
+                }
             }
         });
 
