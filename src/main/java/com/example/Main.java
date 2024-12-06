@@ -1,80 +1,25 @@
 package com.example;
 
-import com.example.model.ImagePanel;
-
-import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-
+import com.example.model.CustomFrame;
+import com.example.model.MemePanel;
+import com.example.model.LoadingPanel;
 
 public class Main {
-    static final int FRAME_WIDTH = 700;
-    static final int FRAME_HEIGHT = 500;
-    private static int direction = 1;
-
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        frame.setResizable(false);
-        frame.setTitle("Gestures in IDE");
-        frame.setVisible(true);
+        CustomFrame frame = new CustomFrame();
+        LoadingPanel lp = new LoadingPanel(500, 150);
+        FrameHelper fh = new FrameHelper(frame, lp);
 
-        ImagePanel ip = new ImagePanel();
-        frame.add(ip);
-        ip.setVisible(false);
-
-        frame.addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                int mouseX = e.getX();
-                int mouseY = e.getY();
-
-                switch (direction) {
-                    case 1:
-                        ip.growRightLeft(mouseX, mouseY);
-                        break;
-                    case 2:
-                        ip.growLeftRight(mouseX, mouseY);
-                        break;
-                    case 3:
-                        ip.growTopDown(mouseX, mouseY);
-                        break;
-                    case 4:
-                        ip.growBottomUp(mouseX, mouseY);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-
-        frame.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent e) {
-                ip.setVisible(false);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                ip.setVisible(true);
-                int x = e.getX();
-                int y = e.getY();
-
-                int width = frame.getWidth();
-                int height = frame.getHeight();
-
-                if (x <= 1) {
-                    direction = 2;
-                } else if (x >= width - 1) {
-                    direction = 1;
-                } else if (y <= 40) {
-                    direction = 3;
-                } else if (y >= height - 10) {
-                    direction = 4;
-                }
-            }
-        });
-
+        fh.loadComponents();
     }
+}
+
+class MemeDemo {
+    public static void main(String[] args) {
+        CustomFrame frame = new CustomFrame();
+        MemePanel ip = new MemePanel();
+
+        frame.setPanel(ip);
+    }
+
 }
